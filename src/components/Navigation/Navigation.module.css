@@ -1,0 +1,22 @@
+.navbar {
+  background-color: var(--white);
+  border-bottom: 0.1rem solid var(--citrine);
+  justify-content: space-between !important;
+}
+
+.btnSmall {
+  font-size: 0.9rem !important;
+}
+
+.brandName {
+  font-size: 1.6rem !important;
+  font-weight: bold;
+  color: var(--fulvous) !important;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    margin-left: 4rem !important;
+    margin-right: 4rem !important;
+  }
+}

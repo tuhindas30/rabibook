@@ -1,0 +1,41 @@
+.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.5rem;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  justify-content: space-around;
+  text-align: center;
+  border-top: 0.1rem solid var(--citrine);
+  background-color: var(--white);
+}
+
+.footerItem {
+  font-size: 1.6rem;
+}
+
+.footerLink {
+  color: var(--rosewood) !important;
+}
+
+.avatar {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0.2rem solid var(--fulvous);
+}
+
+.active {
+  color: var(--fulvous) !important;
+}
+
+.activeBorder {
+  border-color: var(--fulvous) !important;
+}
+
+@media screen and (min-width: 768px) {
+  .footer {
+    display: none !important;
+  }
+}
