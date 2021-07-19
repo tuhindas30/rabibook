@@ -1,0 +1,72 @@
+.container {
+  min-height: calc(100vh - 7rem);
+}
+
+.headerItem {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem !important;
+}
+
+.brandName {
+  font-weight: bold;
+  margin-top: 1rem;
+  color: var(--fulvous);
+}
+
+.tagline {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.signupText {
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.button {
+  font-weight: bold;
+}
+
+.buttonColor {
+  color: var(--white) !important;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+}
+
+.footerHeading {
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.footerLink {
+  font-size: 0.8rem;
+  margin-right: 1rem;
+  color: var(--rufous) !important;
+}
+
+.credit {
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+}
+
+.creator {
+  font-weight: bold;
+  color: var(--fulvous) !important;
+}
+
+@media screen and (min-width: 768px) {
+  .button {
+    width: 50% !important;
+  }
+}
