@@ -1,0 +1,51 @@
+.cardBody {
+  padding: 1rem !important;
+}
+
+.listAvatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.listHeader {
+  margin-bottom: 1rem;
+}
+
+.listTitle {
+  margin-bottom: 0.5rem;
+}
+
+.displayName {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.username {
+  font-size: 1rem;
+  color: var(--fulvous);
+  margin-right: 0.5rem;
+}
+
+.postTime {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.footerItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.iconMargin {
+  margin-right: 0.5rem;
+}
+
+.iconColor {
+  color: var(--red);
+}
+
+.trashIcon {
+  color: var(--red);
+}
