@@ -44,8 +44,9 @@ jobs:
           name: build
           path: build
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@main
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
+          PROJECT_ID: rabibook-8aa80
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
