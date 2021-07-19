@@ -1,0 +1,73 @@
+.coverPhotoContainer {
+  margin-top: 4rem;
+}
+
+.coverPhoto {
+  width: 100%;
+  height: 15rem;
+}
+
+.avatar {
+  position: relative;
+  top: -2.4rem;
+  width: 5rem;
+  height: 5rem;
+  border: 0.2rem solid var(--white);
+}
+
+.profileInfo {
+  margin-top: -2.2rem;
+}
+
+.displayName {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.username {
+  color: var(--fulvous);
+}
+
+.bio {
+  margin-top: 0.5rem;
+}
+
+.formContainer {
+  height: 100vh;
+}
+
+.heading {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.formContainer {
+  margin-top: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+.formControl {
+  max-width: 80%;
+  margin: auto;
+}
+
+.button {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .coverPhoto {
+    height: 20rem;
+  }
+
+  .avatar {
+    top: -4rem;
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .profileInfo {
+    margin-top: -3rem;
+  }
+}

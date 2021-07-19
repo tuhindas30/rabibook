@@ -1,0 +1,65 @@
+.sideNav {
+  display: none !important;
+}
+
+@media screen and (min-width: 768px) {
+  .sideNav {
+    display: block !important;
+    position: fixed !important;
+    top: 5rem;
+    width: 20%;
+    height: 100vh;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-right: 1px solid var(--citrine);
+  }
+
+  .pillsContainer {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85vh;
+  }
+
+  .navPills {
+    flex-direction: column !important;
+  }
+
+  .navLink {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    color: var(--rosewood) !important;
+    border-radius: 5rem;
+  }
+
+  .navLink:hover {
+    transition: 0.5s;
+    background-color: var(--light-fulvous);
+    color: var(--fulvous) !important;
+  }
+
+  .profile {
+    font-size: 1rem;
+  }
+
+  .displayName {
+    font-weight: bold;
+  }
+
+  .username {
+    color: var(--fulvous);
+  }
+
+  .avatar {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .iconMargin {
+    font-size: 2rem;
+    margin-right: 1rem;
+  }
+
+  .active {
+    color: var(--fulvous) !important;
+  }
+}
