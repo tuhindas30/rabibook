@@ -29,17 +29,19 @@ const Home = () => {
             Share your insights on Tagore poems, novels, songs and books.
           </p>
           <h3 className={styles.signupText}>Join RabiBook today</h3>
-          <Button block className={`button ${styles.button}`}>
-            <Link to="/signup" className={styles.buttonColor}>
+          <Link to="/signup" className={styles.buttonLink}>
+            <Button block className={`button ${styles.button}`}>
               Sign up
-            </Link>
-          </Button>
-          <Button
-            variant="outline-primary"
-            block
-            className={`outline ${styles.button}`}>
-            <Link to="/login">Log in</Link>
-          </Button>
+            </Button>
+          </Link>
+          <Link to="/login" className={styles.buttonLink}>
+            <Button
+              variant="outline-primary"
+              block
+              className={`outline ${styles.button}`}>
+              Log in
+            </Button>
+          </Link>
         </Col>
         <Col md className={styles.imageContainer}>
           <Image src={Hero} rounded />

@@ -4,11 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
 import { UpdateProfileForm } from "../../components";
 import { fetchUserById, updateUser } from "../auth/authSlice";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Settings = () => {
   const authUser = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const documentTitle =
+    authUser.displayName && authUser.username
+      ? `${authUser.displayName} (@${authUser.username}) / RabiBook`
+      : "RabiBook";
+
+  useDocumentTitle(documentTitle);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
