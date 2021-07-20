@@ -31,7 +31,7 @@ You can create an account at **RabiBook** to explore or use the below credential
 
 ### [Click here](https://rabibook.netlify.app/) for the Live Demo
 
-## Technology Stack
+## Tech Stack
 
 - React-Redux
 - Redux-Toolkit
