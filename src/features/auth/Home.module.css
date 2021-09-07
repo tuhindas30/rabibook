@@ -1,5 +1,5 @@
 .container {
-  min-height: calc(100vh - 7rem);
+  min-height: calc(100vh - 9.2rem);
 }
 
 .headerItem {
@@ -42,7 +42,7 @@
 }
 
 .footer {
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
 }
 
@@ -65,6 +65,10 @@
 .creator {
   font-weight: bold;
   color: var(--fulvous) !important;
+}
+
+.creator:hover {
+  text-decoration: underline !important;
 }
 
 @media screen and (min-width: 768px) {

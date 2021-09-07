@@ -5,6 +5,7 @@ import { auth } from "../../firebase";
 import { UpdateProfileForm } from "../../components";
 import { fetchUserById, updateUser } from "../auth/authSlice";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 
 const Settings = () => {
   const authUser = useSelector((state) => state.auth);
@@ -36,7 +37,11 @@ const Settings = () => {
   };
 
   if (authUser.status === "loading") {
-    return <h1 className="overlay">Loading ...</h1>;
+    return (
+      <div className="overlay">
+        <Loader />
+      </div>
+    );
   }
 
   return <UpdateProfileForm onUpdate={handleUpdateUser} />;

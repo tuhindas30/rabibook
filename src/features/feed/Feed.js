@@ -13,6 +13,7 @@ import { fetchUserById } from "../auth/authSlice";
 import * as feedSlice from "./feedSlice";
 import { commentPost, deleteComment } from "../comments/commentSlice";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Feed.module.css";
 
 const Post = () => {
@@ -96,13 +97,17 @@ const Post = () => {
   };
 
   if (feed.status === "loading" || authUser.status === "loading") {
-    return <h1 className="overlay">Loading</h1>;
+    return (
+      <div className="overlay">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <>
       <Search />
-      <CreatePostForm onButtonClick={handlePost} />
+      <CreatePostForm onButtonClick={handlePost} isLoading={feed.status} />
       <h4 className={styles.title}>Feed</h4>
       {feed.status === "error" && (
         <div className={styles.message}>Cannot load feed. Try again.</div>

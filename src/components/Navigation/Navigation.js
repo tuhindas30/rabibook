@@ -17,7 +17,7 @@ const Navigation = () => {
 
   return (
     <Navbar fixed="top" className={styles.navbar}>
-      <Container className={styles.container}>
+      <Container fluid className={styles.container}>
         <Link to="/">
           <Navbar.Brand className={styles.brandName}>RabiBook</Navbar.Brand>
         </Link>
