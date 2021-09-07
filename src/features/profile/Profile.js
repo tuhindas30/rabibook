@@ -14,6 +14,7 @@ import * as profileSlice from "./profileSlice";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Wrapper from "../../layouts/Wrapper";
 import Error404 from "../error/Error404";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Profile.module.css";
 
 const Profile = () => {
@@ -110,7 +111,7 @@ const Profile = () => {
       displayName: profile.displayName,
       username: profile.username,
       avatar: profile.avatar,
-      bio: authUser.bio,
+      bio: profile.bio,
     };
     if (isFollowing) {
       setFollowing(false);
@@ -137,7 +138,9 @@ const Profile = () => {
   if (authUser.status === "loading" || profile.userStatus === "loading") {
     return (
       <Wrapper>
-        <h1 className="overlay">Loading</h1>
+        <div className="overlay">
+          <Loader />
+        </div>
       </Wrapper>
     );
   }

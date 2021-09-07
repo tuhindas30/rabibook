@@ -7,6 +7,7 @@ import {
   ListGroup,
   Modal,
 } from "react-bootstrap";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import { FaTelegramPlane } from "react-icons/fa";
 import CommentList from "../CommentList/CommentList";
 
@@ -17,9 +18,9 @@ const CommentModal = ({
   onSend,
   onDelete,
 }) => {
-  const { comments } = useSelector((state) => state.comments);
+  const { comments, status } = useSelector((state) => state.comments);
   const [commentInput, setCommentInput] = useState("");
-  const [isDisabled, setDisabled] = useState(true);
+  const isDisabled = commentInput.length === 0;
 
   const handleSend = () => {
     const commentData = {
@@ -30,17 +31,23 @@ const CommentModal = ({
       content: commentInput,
     };
     setCommentInput("");
-    setDisabled(true);
     onSend(modalData.postId, commentData);
   };
 
-  const activateBtn = (e) => {
-    const text = e.target.value;
-    setCommentInput(text);
-    setDisabled(true);
-    if (text.length > 0) {
-      return setDisabled(false);
+  const renderComments = () => {
+    if (status === "loading") {
+      return <Loader width="5rem" height="5rem" />;
     }
+    if (comments.length > 0) {
+      return comments.map((comment) => (
+        <CommentList
+          key={comment.commentId}
+          comment={comment}
+          onDelete={() => onDelete(modalData.postId, comment.commentId)}
+        />
+      ));
+    }
+    return "Be the first one to comment";
   };
 
   return (
@@ -57,10 +64,9 @@ const CommentModal = ({
           <FormControl
             as="textarea"
             value={commentInput}
-            onChange={activateBtn}
+            onChange={(e) => setCommentInput(e.target.value)}
             placeholder="Say something ..."
             aria-label="Comments"
-            aria-describedby="basic-addon2"
           />
           <Button
             onClick={handleSend}
@@ -70,15 +76,7 @@ const CommentModal = ({
             <FaTelegramPlane />
           </Button>
         </InputGroup>
-        <ListGroup variant="flush">
-          {comments.map((comment) => (
-            <CommentList
-              key={comment.commentId}
-              comment={comment}
-              onDelete={() => onDelete(modalData.postId, comment.commentId)}
-            />
-          ))}
-        </ListGroup>
+        <ListGroup variant="flush">{renderComments()}</ListGroup>
       </Modal.Body>
     </Modal>
   );

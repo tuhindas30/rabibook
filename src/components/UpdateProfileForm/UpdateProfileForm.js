@@ -10,6 +10,8 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { storage } from "../../firebase";
+import { useLegacyState } from "../../hooks";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./UpdateProfileForm.module.css";
 
 const MAX_AVATAR_SIZE = 500 * 1024;
@@ -17,6 +19,10 @@ const MAX_COVER_PHOTO_SIZE = 500 * 1024;
 
 const UpdateProfileForm = ({ onUpdate }) => {
   const authUser = useSelector((state) => state.auth);
+  const [isLoading, setLoading] = useLegacyState({
+    avatar: false,
+    coverPhoto: false,
+  });
   const [isDisabled, setDisabled] = useState(false);
   const [alertDisplay, setAlertDisplay] = useState(false);
   const [error, setError] = useState("");
@@ -44,12 +50,14 @@ const UpdateProfileForm = ({ onUpdate }) => {
     const fileRef = storage.ref(
       `${e.target.name}/${authUser.uid}/${Date.now()}`
     );
+    setLoading({ [e.target.name]: true });
     await fileRef.put(e.target.files[0]);
     await fileRef
       .getDownloadURL()
       .then((url) =>
         setFormData((state) => ({ ...state, [e.target.name]: url }))
       );
+    setLoading({ [e.target.name]: false });
   };
 
   const checkValidation = (e) => {
@@ -99,6 +107,9 @@ const UpdateProfileForm = ({ onUpdate }) => {
       <Row className={styles.formContainer}>
         <Col>
           <h2 className={styles.heading}>Update Profile</h2>
+          <div style={{ textAlign: "center", marginBottom: "1.2rem" }}>
+            See previews at the top
+          </div>
           {alertDisplay && error && (
             <Alert
               variant="danger"
@@ -148,12 +159,13 @@ const UpdateProfileForm = ({ onUpdate }) => {
             <Form.Group>
               <Form.File
                 name="avatar"
-                label="Profile picture"
+                label="Profile Picture"
                 accept="image/*"
                 onChange={handleFileInput}
                 disabled={!isEditable}
                 className={!isEditable ? "not-allowed" : "auto"}
               />
+              {isLoading.avatar ? <Loader width="2rem" height="2rem" /> : null}
             </Form.Group>
             <Form.Group>
               <Form.File
@@ -164,6 +176,9 @@ const UpdateProfileForm = ({ onUpdate }) => {
                 disabled={!isEditable}
                 className={!isEditable ? "not-allowed" : "auto"}
               />
+              {isLoading.coverPhoto ? (
+                <Loader width="2rem" height="2rem" />
+              ) : null}
             </Form.Group>
             <Form.Group>
               <Form.Label>Bio</Form.Label>

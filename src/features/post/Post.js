@@ -13,6 +13,7 @@ import { loadPosts } from "../feed/feedSlice";
 import { useLike } from "../../hooks/useLike";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import * as postSlice from "./postSlice";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Post.module.css";
 
 const Post = () => {
@@ -95,7 +96,11 @@ const Post = () => {
   };
 
   if (authUser.status === "loading" || status === "loading") {
-    return <h1 className="overlay">Loading ...</h1>;
+    return (
+      <div className="overlay">
+        <Loader />
+      </div>
+    );
   }
 
   return (

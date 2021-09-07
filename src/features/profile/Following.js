@@ -9,6 +9,7 @@ import { fetchUserByUsername } from "./profileSlice";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Wrapper from "../../layouts/Wrapper";
 import Error404 from "../error/Error404";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Following.module.css";
 
 const Following = () => {
@@ -41,7 +42,9 @@ const Following = () => {
   if (authUser.status === "loading" || followingStatus === "loading") {
     return (
       <Wrapper>
-        <h1 className="overlay">Loading ...</h1>
+        <div className="overlay">
+          <Loader />
+        </div>
       </Wrapper>
     );
   }
