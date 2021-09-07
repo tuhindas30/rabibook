@@ -31,7 +31,7 @@ const SideNav = () => {
         <Nav>
           <NavLink to={`/${username}`} className={styles.navLink}>
             <Row>
-              <Col>
+              <Col md={3} style={{ marginRight: "0.5rem" }}>
                 {avatar ? (
                   <Image src={avatar} className={styles.avatar} roundedCircle />
                 ) : (

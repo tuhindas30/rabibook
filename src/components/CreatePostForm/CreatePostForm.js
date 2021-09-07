@@ -4,23 +4,13 @@ import styles from "./CreatePostForm.module.css";
 
 const MAX_CHAR_LIMIT = 500;
 
-const PostForm = ({ onButtonClick }) => {
+const PostForm = ({ onButtonClick, isLoading }) => {
   const [content, setContent] = useState("");
-  const [isButtonDisabled, setButtonDisabled] = useState(true);
-
-  const handleContentInput = (e) => {
-    const character = e.target.value;
-    setContent(character);
-    if (character.length > 0 && character.length <= MAX_CHAR_LIMIT) {
-      return setButtonDisabled(false);
-    }
-    return setButtonDisabled(true);
-  };
+  const isDisabled = content.length === 0 || content.length > MAX_CHAR_LIMIT;
 
   const handlePostBtnClick = (content) => {
     onButtonClick(content);
     setContent("");
-    setButtonDisabled(true);
   };
 
   return (
@@ -31,7 +21,7 @@ const PostForm = ({ onButtonClick }) => {
           value={content}
           placeholder="Post a reading insight"
           rows={3}
-          onChange={handleContentInput}
+          onChange={(e) => setContent(e.target.value)}
         />
         <Row className={styles.characterCount}>
           <Col>
@@ -42,10 +32,8 @@ const PostForm = ({ onButtonClick }) => {
           <Col>
             <Button
               onClick={() => handlePostBtnClick(content)}
-              disabled={isButtonDisabled}
-              className={`button ${
-                isButtonDisabled ? "not-allowed" : "pointer"
-              }`}>
+              disabled={isDisabled}
+              className={`button ${isDisabled ? "not-allowed" : "pointer"}`}>
               Post
             </Button>
           </Col>
