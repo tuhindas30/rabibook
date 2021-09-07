@@ -9,3 +9,4 @@ export { default as ProfileForm } from "./ProfileForm/ProfileForm";
 export { default as UpdateProfileForm } from "./UpdateProfileForm/UpdateProfileForm";
 export { default as Search } from "./Search/Search";
 export { default as SideNav } from "./SideNav/SideNav";
+export { default as SocialIcons } from "./SocialIcons/SocialIcons";

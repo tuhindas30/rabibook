@@ -1,0 +1,12 @@
+.iconContainer {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.5rem auto;
+  list-style: none;
+  font-size: 1.5rem;
+}
+
+.iconLink:hover {
+  transition: 0.5s;
+  color: var(--fulvous) !important;
+}

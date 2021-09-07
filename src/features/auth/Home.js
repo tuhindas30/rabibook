@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { SocialIcons } from "../../components";
 import styles from "./Home.module.css";
 import Hero from "./Hero.webp";
 
@@ -50,6 +51,7 @@ const Home = () => {
       <Row className={styles.footer}>
         <Col>
           <div className={styles.footerHeading}>RabiBook v0.1</div>
+          <SocialIcons />
           <div className={styles.credit}>
             Made with ❤️ by{" "}
             <a
