@@ -5,13 +5,18 @@ import { auth } from "../../firebase";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Navigation } from "../../components";
 import { signin } from "./authSlice";
-import useDocumentTitle from "../../hooks/useDocumentTitle";
+import { useDocumentTitle, useLegacyState } from "../../hooks";
+import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Login.module.css";
 
 const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [alertDisplay, setAlertDisplay] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isLoading, setLoading] = useLegacyState({ user: false, guest: false });
+  const [credentials, setCredentials] = useLegacyState({
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,21 +32,38 @@ const Login = () => {
   }, [navigate]);
 
   const handleInput = (e) => {
-    setFormData((state) => ({ ...state, [e.target.name]: e.target.value }));
-  }
+    setCredentials({ [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     setAlertDisplay(false);
-    const response = await dispatch(
-      signin({ email: formData.email, password: formData.password })
-    );
+    setLoading({ user: true });
+    const response = await dispatch(signin(credentials));
     if (!response.error) {
       return navigate("/");
     }
+    setLoading({ user: false });
     setErrorMsg(response.error.message);
     return setAlertDisplay(true);
+  };
+
+  const handleGuestLogin = async () => {
+    const credentials = {
+      email: process.env.REACT_APP_TEST_USER,
+      password: process.env.REACT_APP_TEST_PASSWORD,
+    };
+    setErrorMsg("");
+    setAlertDisplay(false);
+    setLoading({ guest: true });
+    const response = await dispatch(signin(credentials));
+    if (!response.error) {
+      return navigate("/");
+    }
+    setLoading({ guest: false });
+    setErrorMsg(response.error.message);
+    setAlertDisplay(true);
   };
 
   const handleCloseAlert = () => {
@@ -86,8 +108,29 @@ const Login = () => {
                   Please provide a valid password.
                 </Form.Control.Feedback>
               </Form.Group>
-              <Button type="submit" className={`button ${styles.button}`}>
-                Log in
+              <Button
+                type="submit"
+                disabled={credentials.password.length < 6 || isLoading.user}
+                className={`button ${styles.button} ${
+                  isLoading.user ? "not-allowed" : "pointer"
+                }`}>
+                {isLoading.user ? (
+                  <Loader width="1.5rem" height="1.5rem" />
+                ) : (
+                  "Log in"
+                )}
+              </Button>
+              <Button
+                onClick={handleGuestLogin}
+                className={`button ${styles.button} ${
+                  isLoading.guest ? "not-allowed" : "pointer"
+                }`}
+                disabled={isLoading.guest}>
+                {isLoading.guest ? (
+                  <Loader width="1.5rem" height="1.5rem" />
+                ) : (
+                  "Log in as guest"
+                )}
               </Button>
             </Form>
             <Link to="/signup" className={styles.signupLink}>
