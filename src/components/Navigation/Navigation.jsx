@@ -5,7 +5,7 @@ import { signout } from "../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Navigation = () => {
-  const authUser = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const Navigation = () => {
         <Link to="/">
           <Navbar.Brand className={styles.brandName}>RabiBook</Navbar.Brand>
         </Link>
-        {authUser.uid && (
+        {auth.user?.uid && (
           <Button
             onClick={handleLogoutBtn}
             className={`outline ${styles.btnSmall}`}>

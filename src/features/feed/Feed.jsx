@@ -9,17 +9,18 @@ import {
   PostCard,
   Search,
 } from "../../components";
-import { fetchUserById } from "../auth/authSlice";
+import { userInitialized, fetchUserById } from "../auth/authSlice";
 import * as feedSlice from "./feedSlice";
 import { commentPost, deleteComment } from "../comments/commentSlice";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Feed.module.css";
+import { authResponse } from "../../services/helper";
 
 const Post = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authUser = useSelector((state) => state.auth);
+  const { status, user } = useSelector((state) => state.auth);
   const feed = useSelector((state) => state.feed);
   const [isModalShown, setModalShown] = useState(false);
   const [modalData, setModalData] = useState({
@@ -41,24 +42,27 @@ const Post = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        return navigate("/home");
-      }
-      const { uid } = user;
-      if (authUser.status === "idle" || feed.status === "idle") {
-        dispatch(fetchUserById(uid));
+      if (user) {
+        dispatch(userInitialized(authResponse(user)));
+        if (status === "idle" || feed.status === "idle") {
+          dispatch(fetchUserById(user.uid));
+        }
+      } else {
+        navigate("/home");
       }
     });
-    return () => unsubscribe();
-  }, [dispatch, navigate, authUser.status, feed.status]);
+    return unsubscribe;
+  }, []);
+
+  console.log(user);
 
   const handlePost = (content) => {
     const postObj = {
       author: {
-        uid: authUser.uid,
-        displayName: authUser.displayName,
-        username: authUser.username,
-        avatar: authUser.avatar,
+        uid: user.uid,
+        displayName: user.user.displayName,
+        username: user.username,
+        avatar: user.avatar,
       },
       content: content,
     };
@@ -96,7 +100,7 @@ const Post = () => {
     dispatch(removeLikeBtnClicked({ postId }));
   };
 
-  if (feed.status === "loading" || authUser.status === "loading") {
+  if (feed.status === "loading" || status === "loading") {
     return (
       <div className="overlay">
         <Loader />

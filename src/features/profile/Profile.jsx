@@ -5,7 +5,7 @@ import { Button, Col, Image, Row } from "react-bootstrap";
 import { auth } from "../../firebase";
 import { BsCalendar } from "react-icons/bs";
 import { CommentModal, PostCard } from "../../components";
-import { sendBtnClicked, deleteBtnClicked } from "../profile/profileSlice";
+import { sendBtnClicked, deleteBtnClicked } from "./profileSlice";
 import { commentPost, deleteComment } from "../comments/commentSlice";
 import { fetchUserById } from "../auth/authSlice";
 import { loadPosts } from "../feed/feedSlice";
@@ -16,12 +16,13 @@ import Wrapper from "../../layouts/Wrapper";
 import Error404 from "../error/Error404";
 import { ReactComponent as Loader } from "../../assets/images/Loader.svg";
 import styles from "./Profile.module.css";
+import shortName from "../../helpers/shortName";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { username } = useParams();
-  const authUser = useSelector((state) => state.auth);
-  const profile = useSelector((state) => state.profile);
+  const { status, user } = useSelector((state) => state.auth);
+  const { profile } = useSelector((state) => state.profile);
   const [isModalShown, setModalShown] = useState(false);
   const [modalData, setModalData] = useState({
     postId: "",
@@ -37,52 +38,76 @@ const Profile = () => {
     removeLikeBtnClicked,
     unFollowProfile,
   } = profileSlice;
-  const isProfileFollowing = authUser.following?.includes(profile.uid);
-  const [isFollowing, setFollowing] = useState(false);
-  const documentTitle =
-    profile.displayName && profile.username
-      ? `${profile.displayName} (@${profile.username}) / RabiBook`
-      : "RabiBook";
-  const coverPhotoURL = profile.coverPhoto
-    ? profile.coverPhoto
-    : `https://cdn.statically.io/og/theme=dark/${
-        profile.displayName || "Cover Photo"
-      }.jpg`;
 
-  useDocumentTitle(documentTitle);
+  const isProfileFollowing = user?.following.includes(profile?.uid);
+
+  const [isFollowing, setFollowing] = useState(false);
+
+  const setDocumentTitle = () => {
+    if (profile?.displayName && profile?.username) {
+      return `${profile?.displayName} (@${profile?.username}) / RabiBook`;
+    }
+    return "RabiBook";
+  };
+
+  useDocumentTitle(setDocumentTitle());
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(fetchUserById(user.uid));
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        dispatch(fetchUserById(authUser.uid));
       }
     });
-    return () => unsubscribe();
+    return unsubscribe;
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchUserByUsername(username));
     setFollowing(isProfileFollowing);
-  }, [dispatch, fetchUserByUsername, username, isProfileFollowing]);
+  }, [username, isProfileFollowing]);
 
   const handleDelete = (postId) => {
     dispatch(
       deletePostFromProfile({
         postId,
-        uid: authUser.uid,
-        following: authUser.following,
+        uid: user?.uid,
+        following: user?.following,
       })
     );
     dispatch(deletePostBtnClicked({ postId }));
   };
 
+  const setProfilePhoto = () => {
+    const PROFILE_PHOTO_BASE_URL = "https://cdn.statically.io/avatar/";
+    const DEFAULT_PROFILE_PHOTO = "https://cdn.statically.io/avatar/P";
+    if (profile?.photoURL) {
+      return profile?.photoURL;
+    }
+    if (profile?.displayName) {
+      return `${PROFILE_PHOTO_BASE_URL}/${shortName(profile?.displayName)}`;
+    }
+    return DEFAULT_PROFILE_PHOTO;
+  };
+
+  const setCoverPhoto = () => {
+    const COVER_PHOTO_BASE_URL = "https://cdn.statically.io/og/theme=dark";
+    const DEFAULT_COVER_PHOTO = `${COVER_PHOTO_BASE_URL}/Cover Photo.jpg`;
+    if (profile?.coverPhoto) {
+      return profile?.coverPhoto;
+    }
+    if (profile?.displayName) {
+      return `${COVER_PHOTO_BASE_URL}/${profile?.displayName}.jpg`;
+    }
+    return DEFAULT_COVER_PHOTO;
+  };
+
   const handleLikeBtn = async (postId) => {
-    dispatch(loadPosts({ uid: authUser.uid, following: authUser.following }));
+    dispatch(loadPosts({ uid: user?.uid, following: user?.following }));
     dispatch(likeBtnClicked({ postId }));
   };
 
   const handleRemoveLikeBtn = async (postId) => {
-    dispatch(loadPosts({ uid: authUser.uid, following: authUser.following }));
+    dispatch(loadPosts({ uid: user?.uid, following: user?.following }));
     dispatch(removeLikeBtnClicked({ postId }));
   };
 
@@ -95,31 +120,31 @@ const Profile = () => {
     const response = await dispatch(commentPost({ postId, commentData }));
     if (response.error) return;
     dispatch(sendBtnClicked({ postId }));
-    dispatch(loadPosts({ uid: authUser.uid, following: authUser.following }));
+    dispatch(loadPosts({ uid: user?.uid, following: user?.following }));
   };
 
   const handleDeleteComment = async (postId, commentId) => {
     const response = await dispatch(deleteComment({ postId, commentId }));
     if (response.error) return;
     dispatch(deleteBtnClicked({ postId }));
-    dispatch(loadPosts({ uid: authUser.uid, following: authUser.following }));
+    dispatch(loadPosts({ uid: user?.uid, following: user?.following }));
   };
 
   const toggleFollowBtn = async (uid, isFollowing) => {
     const profileData = {
-      uid: profile.uid,
-      displayName: profile.displayName,
-      username: profile.username,
-      avatar: profile.avatar,
-      bio: profile.bio,
+      uid: profile?.uid,
+      displayName: profile?.displayName,
+      username: profile?.username,
+      photoURL: profile?.photoURL,
+      bio: profile?.bio,
     };
     if (isFollowing) {
       setFollowing(false);
       return dispatch(
         unFollowProfile({
           uid,
-          following: authUser.following.filter(
-            (profileId) => profileId !== profile.uid
+          following: user?.following.filter(
+            (profileId) => profileId !== profile?.uid
           ),
           profileId: profileData.uid,
         })
@@ -129,13 +154,13 @@ const Profile = () => {
     return dispatch(
       followProfile({
         uid,
-        following: [...authUser.following, profile.uid],
+        following: [...user?.following, profile?.uid],
         profileData,
       })
     );
   };
 
-  if (authUser.status === "loading" || profile.userStatus === "loading") {
+  if (status === "loading" || profile?.userStatus === "loading") {
     return (
       <Wrapper>
         <div className="overlay">
@@ -145,25 +170,25 @@ const Profile = () => {
     );
   }
 
-  if (profile.userStatus === "error") {
+  if (profile?.userStatus === "error") {
     return <Error404 />;
   }
 
   return (
     <Wrapper>
       <Row className={styles.coverPhotoContainer}>
-        <Image src={coverPhotoURL} className={styles.coverPhoto} />
+        <Image src={setCoverPhoto()} className={styles.coverPhoto} />
       </Row>
-      <Image src={profile.avatar} className={styles.avatar} roundedCircle />
+      <Image src={setProfilePhoto()} className={styles.avatar} roundedCircle />
       <Row className={styles.profileInfo}>
         <Col>
-          <div className={styles.displayName}>{profile.displayName}</div>
-          <div className={styles.username}>@{profile.username}</div>
+          <div className={styles.displayName}>{profile?.displayName}</div>
+          <div className={styles.username}>@{profile?.username}</div>
         </Col>
-        {authUser.uid !== profile.uid && (
+        {user?.uid !== profile?.uid && (
           <Col className={styles.followButton}>
             <Button
-              onClick={() => toggleFollowBtn(authUser.uid, isFollowing)}
+              onClick={() => toggleFollowBtn(user.uid, isFollowing)}
               className={isFollowing ? "outline" : "button"}>
               {isFollowing ? "Unfollow" : "Follow"}
             </Button>
@@ -171,35 +196,35 @@ const Profile = () => {
         )}
       </Row>
       <Row className={styles.bio}>
-        <Col>{profile.bio}</Col>
+        <Col>{profile?.bio}</Col>
       </Row>
       <Row>
-        {authUser.uid === profile.uid && (
+        {user?.uid === profile?.uid && (
           <Col className={styles.joinedOn}>
             <BsCalendar className={styles.calendarIcon} />
-            Joined {dateToMonYYYY(profile.joinedOn)}
+            Joined {dateToMonYYYY(profile?.joinedOn)}
           </Col>
         )}
       </Row>
       <Row className={styles.following}>
         <Col>
           <Link
-            to={`/${profile.username}/following`}
+            to={`/${profile?.username}/following`}
             className={styles.followingLink}>
-            {profile.followings?.length || 0} Following
+            {profile?.followings?.length || 0} Following
           </Link>
         </Col>
       </Row>
       <h5 className={styles.title}>Posts</h5>
-      {profile.postStatus === "loading" && (
+      {profile?.postStatus === "loading" && (
         <div className={styles.message}>Loading ...</div>
       )}
-      {profile.postStatus === "error" && (
+      {profile?.postStatus === "error" && (
         <div className={styles.message}>Cannot load posts. Try again.</div>
       )}
-      {profile.postStatus === "fulfilled" && (
+      {profile?.postStatus === "fulfilled" && (
         <div className={styles.postsContainer}>
-          {profile.posts.map((post) => (
+          {profile?.posts.map((post) => (
             <PostCard
               key={post.postId}
               post={post}

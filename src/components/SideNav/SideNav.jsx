@@ -6,7 +6,7 @@ import { RiHomeHeartFill, RiSettings2Fill } from "react-icons/ri";
 import styles from "./SideNav.module.css";
 
 const SideNav = () => {
-  const { displayName, username, avatar } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   return (
     <Navbar className={styles.sideNav}>
       <Container className={styles.pillsContainer}>
@@ -29,21 +29,25 @@ const SideNav = () => {
           </NavLink>
         </Nav>
         <Nav>
-          <NavLink to={`/${username}`} className={styles.navLink}>
+          <NavLink to={`/${user?.username}`} className={styles.navLink}>
             <Row>
               <Col md={3} style={{ marginRight: "0.5rem" }}>
-                {avatar ? (
-                  <Image src={avatar} className={styles.avatar} roundedCircle />
+                {user?.photoURL ? (
+                  <Image
+                    src={user?.photoURL}
+                    className={styles.avatar}
+                    roundedCircle
+                  />
                 ) : (
                   <FaUserCircle className={styles.iconMargin} />
                 )}
               </Col>
               <Col className={styles.profile}>
                 <Row className={styles.displayName}>
-                  <Col>{displayName}</Col>
+                  <Col>{user?.displayName}</Col>
                 </Row>
                 <Row className={styles.username}>
-                  <Col>@{username}</Col>
+                  <Col>@{user?.username}</Col>
                 </Row>
               </Col>
             </Row>
