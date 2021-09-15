@@ -40,7 +40,7 @@ const Signup = () => {
       }
     });
     return unsubscribe;
-  }, []);
+  }, [navigate]);
 
   const handleInput = (e) => {
     setFormData({ [e.target.name]: e.target.value });
