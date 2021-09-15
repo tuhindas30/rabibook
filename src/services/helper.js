@@ -1,24 +1,37 @@
-const userResponse = (uid, user) => {
+const authResponse = (authObject) => {
+  const { uid, email, displayName, photoURL, emailVerified, phoneNumber } =
+    authObject;
+
+  return {
+    uid,
+    email,
+    displayName,
+    photoURL,
+    emailVerified,
+    phoneNumber,
+  };
+};
+
+const userResponse = (uid, userObject) => {
   const {
     displayName,
     username,
-    avatar,
+    photoURL,
     coverPhoto,
     bio,
     following,
     createdAt,
-    updatedAt,
-  } = user;
+  } = userObject;
+
   return {
     uid,
     displayName,
     username,
-    avatar,
+    photoURL,
     coverPhoto,
     bio,
     following,
     createdAt: createdAt.toDate().toString(),
-    updatedAt: updatedAt.toDate().toString(),
   };
 };
 
@@ -69,6 +82,7 @@ const handleApiError = (err) => {
 };
 
 export {
+  authResponse,
   userResponse,
   postResponse,
   commentResponse,

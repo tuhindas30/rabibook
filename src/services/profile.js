@@ -1,7 +1,20 @@
 import firebase, { db } from "../firebase";
-import { followingResponse, handleApiError } from "./helper";
+import { followingResponse, handleApiError, userResponse } from "./helper";
 
 const fieldValue = firebase.firestore.FieldValue;
+
+const fetchUserByUsername = async (username) => {
+  try {
+    const response = await db
+      .collection("users")
+      .where("username", "==", username)
+      .get();
+    const user = response.docs[0];
+    return userResponse(user.id, user.data());
+  } catch (err) {
+    return handleApiError(err);
+  }
+};
 
 const fetchFollowings = async (uid) => {
   try {
@@ -67,4 +80,4 @@ const unFollowProfile = async (uid, profileId) => {
   }
 };
 
-export { fetchFollowings, followProfile, unFollowProfile };
+export { fetchUserByUsername, fetchFollowings, followProfile, unFollowProfile };

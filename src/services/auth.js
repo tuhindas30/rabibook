@@ -25,7 +25,7 @@ const signin = async (emailId, password) => {
   }
 };
 
-const signupComplete = async (uid, formData) => {
+const completeSignup = async (uid, formData) => {
   try {
     return await db.doc(`users/${uid}`).set({
       ...formData,
@@ -58,19 +58,6 @@ const fetchUserById = async (uid) => {
   }
 };
 
-const fetchUserByUsername = async (username) => {
-  try {
-    const response = await db
-      .collection("users")
-      .where("username", "==", username)
-      .get();
-    const user = response.docs[0];
-    return userResponse(user.id, user.data());
-  } catch (err) {
-    return handleApiError(err);
-  }
-};
-
 const updateUser = async (uid, userData) => {
   try {
     return await db.doc(`users/${uid}`).set(userData, { merge: true });
@@ -84,19 +71,15 @@ const isUsernameExist = async (username) => {
     .collection("users")
     .where("username", "==", username)
     .get();
-  if (snapshot.empty) {
-    return true;
-  }
-  return false;
+  return snapshot.empty ? true : false;
 };
 
 export {
   signup,
   signin,
   signout,
-  signupComplete,
+  completeSignup,
   fetchUserById,
-  fetchUserByUsername,
   updateUser,
   isUsernameExist,
 };
