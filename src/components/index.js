@@ -10,3 +10,10 @@ export { default as UpdateProfileForm } from "./UpdateProfileForm/UpdateProfileF
 export { default as Search } from "./Search/Search";
 export { default as SideNav } from "./SideNav/SideNav";
 export { default as SocialIcons } from "./SocialIcons/SocialIcons";
+export { default as UserEmail } from "./Form/UserEmail";
+export { default as UserPassword } from "./Form/UserPassword";
+export { default as FormButton } from "./Form/FormButton";
+export { default as DisplayName } from "./SignupCompleteForm/DisplayName";
+export { default as Username } from "./SignupCompleteForm/Username";
+export { default as UserAvatar } from "./SignupCompleteForm/UserAvatar";
+export { default as UserBio } from "./SignupCompleteForm/UserBio";
