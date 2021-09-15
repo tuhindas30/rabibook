@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loadPosts } from "../feed/feedSlice";
-import * as authService from "../../services/auth";
 import * as postService from "../../services/post";
 import * as profileService from "../../services/profile";
 
 export const fetchUserByUsername = createAsyncThunk(
   "profile/user",
   async (username, { dispatch }) => {
-    const response = await authService.fetchUserByUsername(username);
+    const response = await profileService.fetchUserByUsername(username);
     dispatch(fetchPostsByUsername(username));
     dispatch(loadFollowings(response.uid));
     return response;
@@ -61,15 +60,16 @@ export const initialState = {
   userStatus: "idle",
   postStatus: "idle",
   followingStatus: "idle",
-  uid: null,
-  displayName: null,
-  username: null,
-  bio: null,
-  avatar: null,
-  coverPhoto: null,
-  joinedOn: null,
-  posts: [],
-  followings: [],
+  // uid: null,
+  // displayName: null,
+  // username: null,
+  // bio: null,
+  // avatar: null,
+  // coverPhoto: null,
+  // joinedOn: null,
+  // posts: [],
+  // followings: [],
+  profile: null,
 };
 
 const profileSlice = createSlice({
@@ -127,13 +127,14 @@ const profileSlice = createSlice({
     },
     [fetchUserByUsername.fulfilled]: (state, action) => {
       state.userStatus = "fulfilled";
-      state.uid = action.payload.uid;
-      state.displayName = action.payload.displayName;
-      state.username = action.payload.username;
-      state.avatar = action.payload.avatar;
-      state.coverPhoto = action.payload.coverPhoto;
-      state.bio = action.payload.bio;
-      state.joinedOn = action.payload.createdAt;
+      state.profile = { ...state.profile, ...action.payload };
+      // state.uid = action.payload.uid;
+      // state.displayName = action.payload.displayName;
+      // state.username = action.payload.username;
+      // state.avatar = action.payload.avatar;
+      // state.coverPhoto = action.payload.coverPhoto;
+      // state.bio = action.payload.bio;
+      // state.joinedOn = action.payload.createdAt;
     },
     [fetchUserByUsername.rejected]: (state) => {
       state.userStatus = "error";

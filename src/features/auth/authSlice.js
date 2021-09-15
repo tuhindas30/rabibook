@@ -34,10 +34,10 @@ export const fetchUserById = createAsyncThunk(
   }
 );
 
-export const signupComplete = createAsyncThunk(
+export const completeSignup = createAsyncThunk(
   "auth/user/register",
-  async ({ uid, formDataObj }) => {
-    const response = await authService.signupComplete(uid, formDataObj);
+  async ({ uid, formData }) => {
+    const response = await authService.completeSignup(uid, formData);
     return response;
   }
 );
@@ -53,53 +53,40 @@ export const updateUser = createAsyncThunk(
 
 export const initialState = {
   status: "idle",
-  uid: null,
-  email: null,
-  displayName: null,
-  username: null,
-  bio: null,
-  avatar: null,
-  coverPhoto: null,
-  following: [],
+  user: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    userInitialized: (state, action) => {
+      state.user = action.payload;
+    },
+  },
   extraReducers: {
     [signup.fulfilled]: (state, action) => {
-      state.uid = action.payload.uid;
-      state.email = action.payload.email;
-      state.isRecentlySignedUp = true;
+      state.user = { ...state.user, ...action.payload };
     },
     [signin.fulfilled]: (state, action) => {
-      state.uid = action.payload.uid;
-      state.email = action.payload.email;
+      state.user = { ...state.user, ...action.payload };
     },
     [signout.fulfilled]: (state) => {
-      state.uid = null;
-      state.email = null;
+      state.user = null;
     },
     [fetchUserById.pending]: (state) => {
       state.status = "loading";
     },
     [fetchUserById.fulfilled]: (state, action) => {
       state.status = "fulfilled";
-      if (action.payload) {
-        state.uid = action.payload.uid;
-        state.email = action.payload.email;
-        state.displayName = action.payload.displayName;
-        state.username = action.payload.username;
-        state.avatar = action.payload.avatar;
-        state.coverPhoto = action.payload.coverPhoto;
-        state.bio = action.payload.bio;
-        state.following = action.payload.following;
-      }
+      state.user = { ...state.user, ...action.payload };
     },
     [fetchUserById.rejected]: (state) => {
       state.status = "error";
     },
   },
 });
+
+export const { userInitialized } = authSlice.actions;
 
 export default authSlice.reducer;
