@@ -36,8 +36,9 @@ export const fetchUserById = createAsyncThunk(
 
 export const signupComplete = createAsyncThunk(
   "auth/user/register",
-  async ({ uid, formDataObj }) => {
-    const response = await authService.signupComplete(uid, formDataObj);
+  async ({ uid, formData }) => {
+    const response = await authService.signupComplete(uid, formData);
+    console.log({ uid, formData });
     return response;
   }
 );
@@ -77,8 +78,15 @@ const authSlice = createSlice({
       state.email = action.payload.email;
     },
     [signout.fulfilled]: (state) => {
+      state.status = "idle";
       state.uid = null;
       state.email = null;
+      state.displayName = null;
+      state.username = null;
+      state.bio = null;
+      state.avatar = null;
+      state.coverPhoto = null;
+      state.following = [];
     },
     [fetchUserById.pending]: (state) => {
       state.status = "loading";

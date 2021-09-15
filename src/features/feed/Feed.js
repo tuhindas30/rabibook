@@ -49,7 +49,7 @@ const Post = () => {
         dispatch(fetchUserById(uid));
       }
     });
-    return () => unsubscribe();
+    return unsubscribe;
   }, [dispatch, navigate, authUser.status, feed.status]);
 
   const handlePost = (content) => {
