@@ -4,37 +4,27 @@ import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 
 const Search = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [isDisabled, setDisabled] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-
-  const activateBtn = (e) => {
-    const text = e.target.value;
-    setSearchInput(text);
-    setDisabled(true);
-    if (text.length > 0) {
-      setDisabled(false);
-    }
-  };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/${searchInput}`);
+    const form = e.target;
+    if (form.checkValidity()) {
+      navigate(`/${searchTerm}`);
+    }
   };
 
   return (
-    <Form onSubmit={handleSearch}>
-      <InputGroup className="mb-3" style={{ marginTop: "5rem" }}>
+    <Form style={{ flexBasis: "63.6%" }} onSubmit={handleSearch}>
+      <InputGroup>
         <FormControl
-          value={searchInput}
-          onChange={activateBtn}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Try typing `tuhindas` and press Enter"
           aria-label="Search"
         />
-        <Button
-          type="submit"
-          disabled={isDisabled}
-          className={`outline ${isDisabled ? "not-allowed" : "pointer"}`}>
+        <Button type="submit" className="outline">
           <FaSearch />
         </Button>
       </InputGroup>

@@ -26,7 +26,7 @@ body {
   color: var(--dark-sienna) !important;
 }
 
-a {
+.link {
   text-decoration: none !important;
   color: var(--dark-sienna) !important;
 }

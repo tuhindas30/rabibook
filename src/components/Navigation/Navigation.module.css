@@ -4,19 +4,34 @@
   justify-content: space-between !important;
 }
 
-.btnSmall {
+.button {
+  margin: 1rem 0;
   font-size: 0.9rem !important;
 }
 
-.brandName {
+.navbarBrand {
+  flex-basis: 26.7%;
+  margin-right: 0 !important;
+}
+
+.navbarCollapse {
+  margin-top: 1rem !important;
+}
+
+.brandLink {
   font-size: 1.6rem !important;
   font-weight: bold;
   color: var(--fulvous) !important;
 }
 
-@media screen and (min-width: 768px) {
-  .container {
-    margin-left: 4rem !important;
-    margin-right: 4rem !important;
+@media screen and (min-width: 992px) {
+  .button {
+    margin: 0;
+  }
+
+  .navbarCollapse {
+    margin-top: 0 !important;
+    flex-basis: 75%;
+    justify-content: space-between !important;
   }
 }

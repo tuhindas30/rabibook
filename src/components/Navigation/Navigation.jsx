@@ -1,8 +1,9 @@
-import { Button, Container, Navbar } from "react-bootstrap";
+import { Button, Navbar } from "react-bootstrap";
 import styles from "./Navigation.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { signout } from "../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Search from "../Search/Search";
 
 const Navigation = () => {
   const auth = useSelector((state) => state.auth);
@@ -16,19 +17,23 @@ const Navigation = () => {
   };
 
   return (
-    <Navbar fixed="top" className={styles.navbar}>
-      <Container fluid className={styles.container}>
-        <Link to="/">
-          <Navbar.Brand className={styles.brandName}>RabiBook</Navbar.Brand>
+    <Navbar fixed="top" className={styles.navbar} expand="lg">
+      <Navbar.Brand className={styles.navbarBrand}>
+        <Link to="/" className={`link ${styles.brandLink}`}>
+          RabiBook
         </Link>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="navbarScroll" />
+      <Navbar.Collapse className={styles.navbarCollapse}>
+        <Search />
         {auth.user?.uid && (
           <Button
             onClick={handleLogoutBtn}
-            className={`outline ${styles.btnSmall}`}>
+            className={`outline ${styles.button}`}>
             Log out
           </Button>
         )}
-      </Container>
+      </Navbar.Collapse>
     </Navbar>
   );
 };

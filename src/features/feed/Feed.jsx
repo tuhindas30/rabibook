@@ -2,13 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
-import { ListGroup } from "react-bootstrap";
-import {
-  CommentModal,
-  CreatePostForm,
-  PostCard,
-  Search,
-} from "../../components";
+import { Container, ListGroup } from "react-bootstrap";
+import { CommentModal, CreatePostForm, PostCard } from "../../components";
 import { userInitialized, fetchUserById } from "../auth/authSlice";
 import * as feedSlice from "./feedSlice";
 import { commentPost, deleteComment } from "../comments/commentSlice";
@@ -109,8 +104,7 @@ const Post = () => {
   }
 
   return (
-    <>
-      <Search />
+    <Container className={styles.container} fluid>
       <CreatePostForm onButtonClick={handlePost} isLoading={feed.status} />
       <h4 className={styles.title}>Feed</h4>
       {feed.status === "error" && (
@@ -137,7 +131,7 @@ const Post = () => {
         onSend={handleSendComment}
         onDelete={handleDeleteComment}
       />
-    </>
+    </Container>
   );
 };
 
