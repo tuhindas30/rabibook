@@ -1,6 +1,5 @@
-.feedContainer {
-  margin-top: 1rem;
-  margin-bottom: 3.5rem;
+.container {
+  margin-top: 5rem;
 }
 
 .title {
@@ -10,10 +9,4 @@
 .message {
   text-align: center;
   font-size: 1.5rem;
-}
-
-@media screen and (min-width: 768px) {
-  .feedContainer {
-    max-width: 50%;
-  }
 }
