@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Col, Container, Image, Nav, Navbar, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { RiHomeHeartFill, RiSettings2Fill } from "react-icons/ri";
+import { RiHomeHeartFill, RiSettings2Fill, RiUser3Fill } from "react-icons/ri";
 import styles from "./SideNav.module.css";
 
 const SideNav = () => {
@@ -26,6 +26,14 @@ const SideNav = () => {
             end>
             <RiSettings2Fill className={styles.iconMargin} />
             Settings
+          </NavLink>
+          <NavLink
+            to={`/${username}`}
+            className={styles.navLink}
+            activeClassName={styles.active}
+            end>
+            <RiUser3Fill className={styles.iconMargin} />
+            Profile
           </NavLink>
         </Nav>
         <Nav>

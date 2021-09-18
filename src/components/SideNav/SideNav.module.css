@@ -31,10 +31,12 @@
     border-radius: 5rem;
   }
 
-  .navLink:hover {
-    transition: 0.5s;
-    background-color: var(--light-fulvous);
-    color: var(--fulvous) !important;
+  @media (hover: hover) and (pointer: fine) {
+    .navLink:hover {
+      transition: 0.5s;
+      background-color: rgb(217, 131, 36, 0.2);
+      text-decoration: none;
+    }
   }
 
   .profile {
