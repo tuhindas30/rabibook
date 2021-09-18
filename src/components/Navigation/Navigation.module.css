@@ -37,6 +37,6 @@
   .navbarCollapse {
     margin-top: 0 !important;
     flex-basis: 75%;
-    justify-content: space-between !important;
+    justify-content: space-between;
   }
 }
