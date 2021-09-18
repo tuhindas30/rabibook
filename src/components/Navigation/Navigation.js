@@ -5,7 +5,7 @@ import { signout } from "../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Search } from "..";
 
-const Navigation = () => {
+const Navigation = ({ search }) => {
   const authUser = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,8 +25,10 @@ const Navigation = () => {
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse className={styles.navbarCollapse}>
-          <Search />
+        <Navbar.Collapse
+          style={!search ? { justifyContent: "flex-end" } : null}
+          className={styles.navbarCollapse}>
+          {search && <Search />}
           {authUser.uid && (
             <Button
               onClick={handleLogoutBtn}

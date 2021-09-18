@@ -4,7 +4,7 @@ import { Footer, Navigation, SideNav } from "../components";
 const Wrapper = ({ children }) => {
   return (
     <>
-      <Navigation />
+      <Navigation search />
       <SideNav />
       <Container fluid className="wrapper">
         {children}
