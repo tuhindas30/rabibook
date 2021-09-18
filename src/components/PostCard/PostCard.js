@@ -93,29 +93,27 @@ const PostCard = ({ post, onLike, onRemoveLike, onDelete, onComment }) => {
       </Row>
       <Row>
         <Col className={styles.footerItem}>
-          <div className={styles.commentBtn}>
-            <BiComment
-              onClick={(e) => handleComment(e, post.postId, uid)}
-              className={`pointer ${styles.commentIcon}`}
-            />
+          <div
+            className={styles.commentBtn}
+            onClick={(e) => handleComment(e, post.postId, uid)}>
+            <BiComment className={`pointer ${styles.commentIcon}`} />
             <span className={styles.count}>{post.commentCount}</span>
           </div>
         </Col>
         <Col className={styles.footerItem}>
-          <div className={styles.likeBtn}>
-            {isLiked ? (
+          {isLiked ? (
+            <div className={styles.likeBtn} onClick={handleRemoveLike}>
               <AiFillHeart
-                onClick={handleRemoveLike}
                 className={`pointer ${styles.likeIcon} ${styles.iconColor}`}
               />
-            ) : (
-              <AiOutlineHeart
-                onClick={handleLike}
-                className={`pointer ${styles.likeIcon}`}
-              />
-            )}
-            <span className={styles.count}>{post.likedBy.length}</span>
-          </div>
+              <span className={styles.count}>{post.likedBy.length}</span>
+            </div>
+          ) : (
+            <div className={styles.likeBtn} onClick={handleLike}>
+              <AiOutlineHeart className={`pointer ${styles.likeIcon}`} />
+              <span className={styles.count}>{post.likedBy.length}</span>
+            </div>
+          )}
         </Col>
         {isCurrentUserPost && (
           <Col className={styles.footerItem}>

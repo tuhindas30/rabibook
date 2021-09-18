@@ -87,7 +87,7 @@
 
   .commentIcon:hover {
     transition: 0.3s;
-    background-color: rgb(217, 131, 36, 0.1);
+    background-color: rgb(217, 131, 36, 0.4);
   }
 
   .likeBtn:hover,
@@ -99,6 +99,6 @@
   .likeIcon:hover,
   .trashIcon:hover {
     transition: 0.3s;
-    background-color: rgb(164, 6, 6, 0.1);
+    background-color: rgb(102, 32, 32, 0.2);
   }
 }
