@@ -58,6 +58,11 @@ const PostCard = ({ post, onLike, onRemoveLike, onDelete, onComment }) => {
     onComment(postId, uid, data);
   };
 
+  const handleDeletePost = (e, postId) => {
+    e.stopPropagation();
+    onDelete(postId);
+  };
+
   return (
     <ListGroup.Item
       className={styles.card}
@@ -118,7 +123,7 @@ const PostCard = ({ post, onLike, onRemoveLike, onDelete, onComment }) => {
         {isCurrentUserPost && (
           <Col className={styles.footerItem}>
             <BiTrash
-              onClick={() => onDelete(post.postId)}
+              onClick={(e) => handleDeletePost(e, post.postId)}
               className={`pointer ${styles.trashIcon}`}
             />
           </Col>
