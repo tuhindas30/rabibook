@@ -1,0 +1,22 @@
+.avatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.displayName {
+  font-weight: bold;
+}
+
+.username {
+  color: var(--fulvous);
+}
+
+.unFollowButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.unFollowButton {
+  font-size: 0.8rem !important;
+}

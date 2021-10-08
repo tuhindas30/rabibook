@@ -1,0 +1,28 @@
+.commentAvatar {
+  width: 2rem;
+  height: 2rem;
+}
+
+.displayName {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.username {
+  font-size: 1rem;
+  color: var(--fulvous);
+  margin-right: 0.5rem;
+}
+
+.commentTime {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.trash {
+  text-align: center;
+}
+
+.trashIcon {
+  color: var(--red);
+}

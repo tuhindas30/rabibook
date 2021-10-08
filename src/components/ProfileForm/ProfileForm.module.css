@@ -1,0 +1,37 @@
+.container,
+.formContainer {
+  height: 100vh;
+}
+
+.heading {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.formContainer {
+  justify-content: center;
+  align-items: center;
+}
+
+.formControl {
+  max-width: 80%;
+  margin: auto;
+}
+
+.button {
+  width: 100%;
+}
+
+.signupLink {
+  display: block;
+  margin: 1rem auto;
+  width: fit-content;
+  font-size: 0.9rem;
+}
+
+@media screen and (min-width: 768px) {
+  .formControl {
+    max-width: 40%;
+  }
+}

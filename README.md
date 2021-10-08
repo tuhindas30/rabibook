@@ -29,8 +29,6 @@ You can create an account at **RabiBook** to explore or use the below credential
 - Email: test@example.com
 - Password: test12345
 
-### [Click here](https://rabibook.netlify.app/) for the Live Demo
-
 ## Tech Stack
 
 - React-Redux

@@ -1,0 +1,104 @@
+.card {
+  cursor: pointer;
+}
+
+.cardBody {
+  padding: 1rem !important;
+}
+
+.listAvatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.listHeader {
+  margin-bottom: 1rem;
+}
+
+.listTitle {
+  margin-bottom: 0.5rem;
+}
+
+.displayName {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.username {
+  font-size: 1rem;
+  color: var(--fulvous);
+  margin-right: 0.5rem;
+}
+
+.postTime {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+.footerItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.commentBtn,
+.likeBtn {
+  width: fit-content;
+  padding: 0 0.4rem;
+}
+
+.commentIcon,
+.likeIcon,
+.trashIcon {
+  padding: 0.4rem;
+  border-radius: 50%;
+  font-size: 1.9rem;
+  margin-right: 0.2rem;
+}
+
+.count {
+  font-size: 0.9rem;
+}
+
+.iconColor {
+  color: var(--red);
+}
+
+.trashIcon {
+  color: var(--red);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .listAvatar:hover {
+    opacity: 0.8;
+  }
+
+  .displayName:hover,
+  .username:hover {
+    text-decoration: underline;
+  }
+
+  .commentBtn:hover,
+  .commentIcon:hover {
+    transition: 0.3s;
+    color: var(--fulvous);
+  }
+
+  .commentIcon:hover {
+    transition: 0.3s;
+    background-color: rgb(217, 131, 36, 0.4);
+  }
+
+  .likeBtn:hover,
+  .likeIcon:hover {
+    transition: 0.3s;
+    color: var(--rufous);
+  }
+
+  .likeIcon:hover,
+  .trashIcon:hover {
+    transition: 0.3s;
+    background-color: rgb(102, 32, 32, 0.2);
+  }
+}

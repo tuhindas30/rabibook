@@ -1,0 +1,69 @@
+.card {
+  margin-top: 4rem;
+}
+
+.cardBody {
+  padding: 1rem !important;
+}
+
+.cardAvatar {
+  width: 3rem;
+  height: 3rem;
+}
+
+.displayName {
+  font-weight: bold !important;
+}
+
+.username {
+  font-size: 1rem;
+  color: var(--fulvous) !important;
+  margin-right: 0.5rem;
+}
+
+.postTime {
+  margin-right: 0.5rem;
+}
+
+.postDate {
+  margin-left: 0.5rem;
+}
+
+.content {
+  font-size: 1.5rem;
+  margin-bottom: 1rem !important;
+}
+
+.likeCount {
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.commentCount {
+  font-weight: bold;
+}
+
+.footer {
+  text-align: center;
+}
+
+.footerItem {
+  font-size: 1.1rem;
+}
+
+.iconMargin {
+  margin-right: 0.5rem;
+}
+
+.iconColor {
+  color: var(--red);
+}
+
+.trashIcon {
+  color: var(--red);
+}
+
+.comment {
+  margin: 1rem 0;
+  text-align: center;
+}
